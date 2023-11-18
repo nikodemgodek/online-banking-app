@@ -4,7 +4,14 @@ import Donut from './components/Donut';
 import { Feather } from '@expo/vector-icons';
 import { Dimensions } from 'react-native';
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+import CustomDrawer from './components/CustomDrawer';
+import Article from './src/Article';
+import Feed from './src/Feed';
+
+
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -169,15 +176,22 @@ const transactions = [
 
 ]
 
+
+const Drawer = createDrawerNavigator();
+
 export default function App() {
+
   return(
     <NavigationContainer>
-      <Dashboard />
+      <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />} initialRouteName='Dashboard'>
+        <Drawer.Screen name="Dashboard" component={Dashboard} options={ { headerShown: false }}/>
+        <Drawer.Screen name="Article" component={Article} />
+      </Drawer.Navigator>
     </NavigationContainer>
   )
 }
 
-const Dashboard = () => {
+const Dashboard = ({ navigation }) => {
 
   const flatListRef = React.useRef(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -205,21 +219,28 @@ const Dashboard = () => {
     setIsScrolling(false);
   };
 
-  
   return (
     <SafeAreaView style={{backgroundColor: '#f7f7f7' }}>
       <View style={{ marginHorizontal: 10 }}>
         <View style={
           { alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }
         }>
-          <Feather name="align-left" size={_menuIconSize} color='#000' />
+
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Feather name="align-left" size={_menuIconSize} color='#000' />
+          </TouchableOpacity>
+         
           <Text style={
             [
               { textTransform: 'uppercase', letterSpacing: .3},
               { fontSize: 16, fontWeight: '400', }
             ]
           }>Dashboard</Text>
-          <Feather name="settings" size={_settingsIconSize} color='#000' />
+
+          <TouchableOpacity onPress={() => {}}>
+            <Feather name="settings" size={_settingsIconSize} color='#000' />
+          </TouchableOpacity>
+
         </View>
         <View style={{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', marginTop: 20,}}>
           <Text style={{fontSize: 26, fontWeight: 600}}>Your cards</Text>
