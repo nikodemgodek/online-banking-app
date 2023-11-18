@@ -297,7 +297,7 @@ export default function App() {
                 }
           ]}>
             <View style={{marginVertical: 30, marginHorizontal: 10, height: height * 0.5}}>
-              <Text style={{fontSize: 26, fontWeight: 500, marginBottom: 15}}>Transactions</Text>
+              <Text style={{fontSize: 26, fontWeight: 500, marginBottom: 15, marginLeft: 15}}>Transactions</Text>
               <FlatList
                 data={transactions}
                 keyExtractor={item => item.id}
