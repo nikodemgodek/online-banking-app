@@ -4,6 +4,7 @@ import Donut from './components/Donut';
 import { Feather } from '@expo/vector-icons';
 import { Dimensions } from 'react-native';
 import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -167,7 +168,16 @@ const transactions = [
   },
 
 ]
+
 export default function App() {
+  return(
+    <NavigationContainer>
+      <Dashboard />
+    </NavigationContainer>
+  )
+}
+
+const Dashboard = () => {
 
   const flatListRef = React.useRef(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
